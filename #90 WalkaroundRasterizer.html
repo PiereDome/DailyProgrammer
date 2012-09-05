@@ -1,0 +1,70 @@
+<html>
+<head>
+<script type='text/javascript'>
+function submit() {
+    var input = document.getElementById('input').value,
+        canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d'),
+        inputArray = input.split(' '),
+        width = inputArray[0],
+        height = inputArray[1],
+        instructions = inputArray[2].split(''),
+        pos = {
+            x: 0,
+            y: 0
+        },
+        picArray = [];
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (i = 0; i < width; i++) {
+        picArray[i] = [];
+        for (j = 0; j < height; j++) {
+            picArray[i][j] = 0;
+        }
+    }
+    while (instructions.length > 0) {
+        switch (instructions.shift().toLowerCase()) {
+        case 'n':
+            pos.y -= 1;
+            break;
+        case 'e':
+            pos.x += 1;
+            break;
+        case 's':
+            pos.y += 1;
+            break;
+        case 'w':
+            pos.x -= 1;
+            break;
+        case 'p':
+            picArray[pos.x][pos.y] = 1;
+            break;
+        default:
+            break;
+        }
+    }
+    console.log(picArray);
+    for (i = 0; i < picArray.length; i++) {
+        for (j = 0; j < picArray[i].length; j++) {
+            temp = picArray[i][j];
+            if (temp == 1) {
+                draw(i, j, ctx);
+            }
+        }
+    }
+}
+
+function draw(x, y, ctx) {
+    ratio = {
+        x: 10,
+        y: 10
+    };
+    ctx.fillRect(x * ratio.x, y * ratio.y, ratio.x, ratio.y);
+}
+</script>
+</head>
+<body>
+<input id='input' type='text' />
+<button id='create' onclick='submit()'>Create</button>
+<canvas id='canvas' ></canvas>
+</body>
+</html>
