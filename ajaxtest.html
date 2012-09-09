@@ -1,0 +1,38 @@
+<html>
+<head>
+<body>
+<span id="ajaxButton" style="cursor: pointer; text-decoration: underline">
+  Make a request
+</span>
+<script type="text/javascript">
+(function() {
+  var httpRequest;
+  document.getElementById("ajaxButton").onclick = function() { makeRequest('http://pastebin.com/raw.php?i=jSD873gL'); };
+ 
+  function makeRequest(url) {
+    var txtFile = new XMLHttpRequest();
+txtFile.open("GET", url, true);
+txtFile.onreadystatechange = function() {
+  if (txtFile.readyState === 4) {  // Makes sure the document is ready to parse.
+    if (txtFile.status === 200) {  // Makes sure it's found the file.
+      allText = txtFile.responseText;
+      lines = txtFile.responseText.split("\n"); // Will separate each line into an array
+    }
+  }
+}
+txtFile.send(null);
+  }
+ 
+  function alertContents() {
+    if (httpRequest.readyState === 4) {
+      if (httpRequest.status === 200) {
+        alert(httpRequest.responseText);
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+})();
+</script>
+</body>
+</html>
